@@ -1,12 +1,14 @@
 ''' 
+Created on 2020
+
+@author: B.J.Hensen
+
 BSD 3-Clause License
 
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
 Code necesary to run the server with Pyro.
-
-Developed mainly by B.J.Hensen
 
 '''
 

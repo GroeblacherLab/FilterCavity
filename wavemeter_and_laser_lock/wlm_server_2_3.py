@@ -1,5 +1,9 @@
 #new wavemeter server 2020
 ''' 
+Created on 2020
+
+@author: B.J.Hensen
+
 BSD 3-Clause License
 
 Copyright (c) 2021, GroeblacherLab
@@ -8,11 +12,12 @@ All rights reserved.
 Code to run a wavemeter server that allows to read in series several lasers.
 
 Needs to have:
+    - qcodes enviroment (https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 	- a wavemeter 
 	- a 1xN optical switch 
 	both connected to the machine running the server.
-
-Developed mainly by B.J.Hensen
+	- Pyro4 (conda install Pyro4)
+	- ctypes (conda install ctypes)
 
 '''
 
@@ -24,9 +29,9 @@ import Pyro4
 
 from network import pyro_tools
 #import the used wavemeter
-from HighFinesse_WS6 import Wavelengthmeter
+from Drivers_and_tools.HighFinesse_WS6 import Wavelengthmeter
 #import the optical switch used to toggle the users
-from Sercalo_1xN_switch import SercaloSwitch
+from Drivers_and_tools.Sercalo_1xN_switch import SercaloSwitch
 
 @Pyro4.expose
 @Pyro4.behavior(instance_mode="single")

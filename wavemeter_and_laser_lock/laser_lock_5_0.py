@@ -1,19 +1,53 @@
+''' 
+Created on 
+
+@author: A.Wallucks
+
+BSD 3-Clause License
+
+Copyright (c) 2021, GroeblacherLab
+All rights reserved.
+
+Code to run a laser lock server that allows to lock single lasers using the reading from a external wavemeter (accessed via the wlm_server_2_3).
+The laser can be controlled remotely and via the GUI.
+To lock multiple lasers in 'parallel' just run the script multiple times in separate consoles (the reading from the wavementer will be in series, so the lock of multiple lasers will be toggling between them in series continuosly).
+
+IN this code 3 classes for 3 lasers used in our labs, all based on the templateLaser():
+     - lockTL6800()
+     - lockTopticaCTL()
+     - lockPPCL550()
+Add a laser creating a class following the templateLaser().
+
+The lasers here can be added to the locking via the lasers list in the main.
+
+Suggest to use a .bat file, otherwise the server will use a generic name and if multiple lasers are used the remote access will be only to the last GUI opened.
+    - Example of .bat file:    start "CTL2 lock" cmd.exe /k "call C:\Users\Localadmin\anaconda3\Scripts\activate.bat qcodes & call C:\Users\Localadmin\anaconda3\envs\qcodes\python.exe "C:\Users\Localadmin\Documents\scripts\GlabScripts\BlueLab\laser_control\laser_lock_5_0.py" "CTL2""
+        change the path of the anaconda and location of the script accordingly
+
+Needs to have:
+    - qcodes enviroment (https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+    - PyQt5 (for the GUI, conda install PyQt5)
+    - Pyro4 (conda install Pyro4)
+    - to run the Toptical DLC (CTL) need the qcodes repository cloned (https://github.com/QCoDeS/Qcodes/tree/master/qcodes)
+
+'''
+
 import time
 import sys
 import visa
-# import nidaqmx
 from PyQt5 import QtGui, QtCore
 import Pyro4
 
 from qcodes import Instrument
-from glablibraries.lib.laser_control.laser_lock import laserWLMLock
-from glablibraries.lib.laser_control.laser_lock_gui_5_0 import laserLockGUI, remote_lock_access
-from glablibraries.drivers.qcodes_instruments.TopticaDLCPro import TopticaDLCPro
-import glablibraries.drivers.ppcl550driver as pp
-from glablibraries.drivers.Tl6800control import TL6800
+from Drivers_and_tools.laser_lock import laserWLMLock
+from Drivers_and_tools.laser_lock_gui_5_0 import laserLockGUI, remote_lock_access
+from Drivers_and_tools.TopticaDLCPro import TopticaDLCPro #needs the qcodes repository
+import Drivers_and_tools.ppcl550driver as pp
+from Drivers_and_tools.Tl6800control import TL6800
 
-from glablibraries.lib.network import pyro_tools,qt5_pyro_integration
+from network import pyro_tools,qt5_pyro_integration
 Pyro4.expose(remote_lock_access)
+
 # =============================================================================
 # class templateLaser():
 #     def __init__(self, params):
@@ -42,7 +76,6 @@ class lockTL6800():
 				 min_out = -15., max_out = 15., coarse_setting_accuracy = 600.):    
 		#--------PARAMETERS----------
         self.name = name
-        # self.daq_chan = daq_chan
         self.pid_p = pid_p
         self.pid_i = pid_i
         self.min_out = min_out
@@ -58,15 +91,10 @@ class lockTL6800():
         self.laser = TL6800()
         time.sleep(0.1)
 			
-        # self.output_task = nidaqmx.task.Task()
-        # self.output_task.ao_channels.add_ao_voltage_chan(self.daq_chan, min_val=self.min_out, max_val=self.max_out)
-        # self.output_task.write(0.0)
-			
     def disconnect_laser(self, reset_feedback = False):
         if reset_feedback:
             self.laser.TL6800_set_piezo_voltage(self.piezo_offset)
             time.sleep(0.1)
-        # self.output_task.close()
         print('laser close')
         self.laser.TL6800_CloseDevices()	
 
@@ -220,23 +248,29 @@ class lockPPCL550():
 
 
 if __name__ == '__main__': 
-    
+    '''
+    Example of usage
+    '''
     app = QtGui.QApplication([])
     
-    ctl1 = lockTopticaCTL('CTL1', '192.168.1.229')
-    ctl2 = lockTopticaCTL('CTL2', '192.168.1.228')
+    #initialise the lasers
+    #ctl1 = lockTopticaCTL('CTL1', '192.168.1.XXX')
+    #ctl2 = lockTopticaCTL('CTL2', '192.168.1.XXX')
     #ppcl = lockPPCL550('PPCL550', 'COM3', 'cDAQ1Mod3/ao0')
-    tl6700 = lockTL6800('TLB1')
+    #tl6700 = lockTL6800('TLB1')
     
+    #list of lasers that can be locked
     lasers = [ctl1, ctl2, tl6700]
     laser_names = [laser.name for laser in lasers]
+    #to use .bat file to run the laser lock with the name of the laser in the name of the server, necessary to remote access several laser instead of only the last GUI opened
     if len(sys.argv)>1 and sys.argv[1] in laser_names:
         cur_laser = sys.argv[1]
         laser_idx = laser_names.index(cur_laser)
     else:
         cur_laser = None
-        
-    lock = laserWLMLock(*lasers)
+    
+    #use the IP of the machine running the wavementer server    
+    lock = laserWLMLock(*lasers, wlm_address = 'PYRONAME:ws6server@192.168.1.XXX')
     Window = laserLockGUI(lock)
     if cur_laser is not None:
         Window.ui.comboBox.setCurrentIndex(laser_idx+1)
@@ -250,10 +284,12 @@ if __name__ == '__main__':
 
     remote_access = remote_lock_access(lock,Window)
     
+    #IP address of the machine where it will run or 'localhost' to run it in the local machine
     host = 'localhost'
     daemon = Pyro4.Daemon(host=host)
     remote_access_uri = daemon.register(remote_access)
 
+    #for the remote access with the name given by the .bat file
     if cur_laser is not None:
         pyro_tools.register_on_nameserver(host,'laser_lock_'+cur_laser, remote_access_uri, existing_name_behaviour='replace')
     else:
@@ -262,12 +298,6 @@ if __name__ == '__main__':
     pyro_handler=qt5_pyro_integration.QtEventHandler(daemon)
     print('done')
         
-    # %%
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         QtGui.QApplication.instance().exec_()
-    #app.exec_()
-    
-    
-    ##### to check what servers are running on the localhost
-    #nameserver=Pyro4.locateNS("localhost")
-    #nameserver.list()
+

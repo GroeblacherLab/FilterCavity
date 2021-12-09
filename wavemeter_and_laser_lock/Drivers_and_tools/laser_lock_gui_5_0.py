@@ -1,3 +1,19 @@
+''' 
+Created on 
+
+@author: A.Wallucks
+
+BSD 3-Clause License
+
+Copyright (c) 2021, GroeblacherLab
+All rights reserved.
+
+The GUI window creation and the remote lock access to the GUI and laser lock.
+Used in laser_lock_5_0
+
+'''
+
+
 import time
 
 import pyqtgraph as pg
@@ -9,7 +25,7 @@ from glablibraries.gui.laser_lock_gui_3_0 import Ui_Dialog
 class laserLockGUI(QtGui.QDialog):
     def __init__(self, lock, parent=None):
         """
-        Locking GUI
+        Locking GUI for a laser
         """
         # QtGui.QDialog.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         super(laserLockGUI, self).__init__(parent)
@@ -61,7 +77,7 @@ class laserLockGUI(QtGui.QDialog):
         self.lock_track_wl = np.array([])
 
         self.enable_gui(True)
-        #timer to update the lock instead of a loop (keeps the GUI responsible during locking)
+        #timer to update the lock instead of a loop (keeps the GUI responsible during locking, every timeout the timer will call the function self.update_lock)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.update_lock)
         self.timer.setSingleShot(True)
@@ -82,8 +98,7 @@ class laserLockGUI(QtGui.QDialog):
         """
         slider_val = float(self.ui.horizontalSlider.value())
         self.lock_detuning = round(self.lock_detuning_wo_slider + self.slider_range*slider_val/1000, 3)
-        #print(f"Det {self.lock_detuning_wo_slider}, from slider {self.slider_range*slider_val/100}")
-
+        
         self.ui.det_lineedit.setText(str(self.lock_detuning))
 
         self.lock_setpoint = 1 / ((1 / self.lock_input_wavelength) + (self.lock_detuning / self.speed_of_light))  #all in GHZ & nm
@@ -148,8 +163,8 @@ class laserLockGUI(QtGui.QDialog):
 
         #coarse wavelength sucessfully set
         self.start_time = time.time()
-        self.timer.setInterval(int(float(self.ui.update_lineedit.text())*1000))
-        self.timer.start()  # in millisec
+        self.timer.setInterval(int(float(self.ui.update_lineedit.text())*1000))  # in millisec
+        self.timer.start() 
         print('timer started')
         
         self.is_running = True
@@ -197,7 +212,11 @@ class laserLockGUI(QtGui.QDialog):
         return self.is_running
     
 class remote_lock_access:
-    """remote access to the lock"""
+    """
+    remote access to the laser lock
+    Here most of the function mimic a click on the mouse to the GUI, so the laser lock need to running with the GUI open
+
+    """
     
     def __init__(self,laser_lock,laser_lock_gui):
         self.laser_lock = laser_lock

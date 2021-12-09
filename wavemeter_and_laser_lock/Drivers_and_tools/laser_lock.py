@@ -1,12 +1,27 @@
+'''
+Created on 
+
+@author: A.Wallucks
+
+BSD 3-Clause License
+
+Copyright (c) 2021, GroeblacherLab
+All rights reserved.
+
+Class to use the wavementer server to lock the lasers, used in laser_lock_5_0 as a general class for all lasers.
+
+
+'''
+
 import time
 import datetime
 import numpy as np
 import Pyro4
-from glablibraries.lib.Tools.PID import PID
+from PID import PID
 
 
 class laserWLMLock():
-    def __init__(self, *available_lasers, wlm_address = 'PYRONAME:ws6server@192.168.1.245'):
+    def __init__(self, *available_lasers, wlm_address = 'PYRONAME:ws6server@192.168.1.XXX'):
         # --------CONSTANTS----------
         
         self.wlm_address = wlm_address 
@@ -14,7 +29,7 @@ class laserWLMLock():
         self.wlm_reconnect_waittime = 2
         
         self.intial_time_wait_check = 30 #seconds
-        self.max_diff_consecutive_reading = 500 #MHz
+        self.max_diff_consecutive_reading = 500 #MHz, to avoid to apply feedback if a huge -false- jump happens. In case the wavemeter reads a wrong value
         
         self.available_lasers = {}
         for l in available_lasers:
@@ -110,6 +125,9 @@ class laserWLMLock():
         self.pid.change_setpoint(new_setpt)
 
     def update_piezo(self, time_diff):
+        '''
+        To update the value used to change the laser waeleght (in general a piezo) with the value calculated from teh PID 
+        '''
         act_wl = self.get_wavelengt()
         if time_diff < self.intial_time_wait_check: #to let the laser go to the set wavelength
             feedback_val = self.pid.update(act_wl)
@@ -127,7 +145,6 @@ class laserWLMLock():
             except:
                 print(f"actual wavelength measured : {act_wl:f}")
                 feedback_val = 0
-        #print(f"WL={act_wl}, Set={self.pid.SetPoint}, feedb={feedback_val}")
         
         return feedback_val, act_wl
 

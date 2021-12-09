@@ -2,14 +2,23 @@
 """
 Created on Wed Feb 24 14:52:54 2016
 
-@author: awallucks
+@author: A.Wallucks
+
+BSD 3-Clause License
+
+Copyright (c) 2021, GroeblacherLab
+All rights reserved.
+
+Driver for the wavemeter.
+
 """
 from ctypes import *
 
 import time
 import sys
 
-from glablibraries.drivers.wlm_constants import *
+#import the constant used by the instrument
+from wlm_constants import *
 
 
 class WLMError(Exception):
