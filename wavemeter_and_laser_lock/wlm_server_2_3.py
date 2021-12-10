@@ -62,9 +62,9 @@ class WS6Server:
         self.users = {}
 
         #initialise the optical switch used to toggle between the lasers
-        self.sw = SercaloSwitch('COM4') ###use the switch used in the lab
+        self.sw = SercaloSwitch('XXXX') ######## use the switch used in the lab, COM4 ...
         self.sw.get_product_info()
-        ### use the same name of the lasers of laser_lock_5_0
+        ######### use the same name of the lasers of laser_lock_5_0
         self.switch_positions = { 'CTL1'    : 1, \
                                   'CTL2'    : 2, \
                                   'TSL550'  : 3, \
@@ -230,7 +230,7 @@ if __name__ == '__main__':
 	#run the file to have the server running on the machine with the IP = host, the machine needs to be connected to the wavemeter
     ws6 = WS6Server()
 
-    host = '192.168.1.XXX' 
+    host = '192.168.1.XXX'   ######## use the IP of the machine used in the lab
     nameserver  = True
     share_name  = 'ws6server'
 
