@@ -9,12 +9,11 @@ Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
 Code to run a laser lock server that allows to lock single lasers using the reading from a external wavemeter (accessed via the wlm_server_2_3).
-The laser can be controlled remotely and via the GUI.
+The laser can be controlled remotely via the laser_lock server on other consoles or machines, and via the GUI.
 To lock multiple lasers in 'parallel' just run the script multiple times in separate consoles (the reading from the wavementer will be in series, so the lock of multiple lasers will be toggling between them in series continuosly).
 
 In this code 1 example class for a TOPTICA DCL pro used in our labs, lockTopticaCTL().
 Add a laser creating a class following the templateLaser().
-
 The lasers here can be added to the locking via the lasers list in the main.
 
 Suggest to use a .bat file, otherwise the server will use a generic name and if multiple lasers are used the remote access will be only to the last GUI opened.
@@ -148,7 +147,8 @@ if __name__ == '__main__':
 
     remote_access = remote_lock_access(lock,Window)
     
-    #IP address of the machine where it will run or 'localhost' to run it in the local machine
+    #IP address of the machine where it will run, or 'localhost' to run it in the local machine
+    #this server will let you have access to the remote control of the GUI (and so the laser), from other consoles or other machines in the local network
     host = 'localhost'
     daemon = Pyro4.Daemon(host=host)
     remote_access_uri = daemon.register(remote_access)
