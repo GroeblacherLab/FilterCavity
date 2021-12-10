@@ -1,12 +1,12 @@
 # LabCode
-Repository of the Lab code developed trhough the year in the Groeblacher Lab in TU Delft.
+Repository of the Python code developed in the Groeblacher Lab at Delft University of Technology.
 
-This includes:
+This folder currently includes:
   - network folder for Pyro (i.e. servers) usage
-  - server for the wavemeter and GUI for laser lock (in the wavemeter_and_laser_lock folder)
+  - Server for an optical wavemeter and GUI for laser lock (in the wavemeter_and_laser_lock folder)
   - GUI for a beatlock system  [TBD]
   - locking in reflection a Fabry-Perot cavity in the maximum trasmission point (CW light and continuos lock)  [TBD]
   - locking in parallel a series of Fabry-Perot cavities in the maximum transmission point (CW light and intermittent lock)   [TBD]
 
 
-As everyone in academia, we do our work for pushing the limit of human knowledge and for the glory of Science. However our life and prosperity is determined by citations. Therefore, if you find any of this material useful, please consider citing this project and/or some of out recent works (https://www.groeblacherlab.org) were all this code were used.
+We are an academic research group working on quantum optomechanics and develop code to control our equipment and run experiments. As writing code for every single tool takes a lot of time and effort, we would like to share it with everyone out there who uses similar tools and hope it will be used by as many people as possible. While most of our research is highly specialized, we hope that our code will find applications in many areas beyond quantum physics. The only thing we ask in return is to be acknowledged for our contribution and hope that using our code helps others to save precious time. Please let us know if you find bugs, if you added new features or have other ideas for improvments and feel free to share our repository with anyone you think would like to use it. If you're interested in the work we do, please visit https://www.groeblacherlab.org
