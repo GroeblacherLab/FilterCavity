@@ -4,7 +4,7 @@ Created on 2020
 
 @author: B.J.Hensen
 
-BSD 3-Clause License
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License
 
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.

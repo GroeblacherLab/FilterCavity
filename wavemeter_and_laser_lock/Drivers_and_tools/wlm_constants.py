@@ -4,7 +4,7 @@ Created on Wed Feb 24 16:50:06 2016
 
 @author: A.Wallucks
 
-BSD 3-Clause License
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License
 
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
