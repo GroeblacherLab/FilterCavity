@@ -1,3 +1,5 @@
+setup as in scheme_setup.jpg
+
 usage of the scripts:
 
 	- run the wlm_server_2_3 on the machine with the wavemeter (driver HighFinesse_WS6) and the optical switch (driver Sercalo_1xN_switch)
