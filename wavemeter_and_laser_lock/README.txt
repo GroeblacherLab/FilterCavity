@@ -5,3 +5,8 @@ HOW TO USE THE CODE:
 	3 - run the laser_lock on the machine connected to the laser (driver TopticaDLCPro) 
 	4 - use the GUI, or run remote_control_laser.py to remotely control the laser lock 
 
+
+
+
+Using the HighFinesse_WS6 as wavemeter and 3 lasers locked at the same time, the feedback for each laser is every second and a stability of +-1MHz around the desired wavelenght is achieved. 
+
