@@ -9,7 +9,7 @@ Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
 The GUI window creation and the remote lock access to the GUI and laser lock.
-Used in laser_lock_5_0
+Used in laser_lock
 
 '''
 
@@ -19,7 +19,7 @@ import time
 import pyqtgraph as pg
 import numpy as np
 from PyQt5 import QtCore, QtGui
-from glablibraries.gui.laser_lock_gui_3_0 import Ui_Dialog
+from laser_lock_gui import Ui_Dialog
 
 
 class laserLockGUI(QtGui.QDialog):

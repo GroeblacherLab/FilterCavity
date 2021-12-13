@@ -9,7 +9,7 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
-Code to control remotely the laser_lock_5_0.
+Code to remotely control the laser_lock.
 
 
 '''

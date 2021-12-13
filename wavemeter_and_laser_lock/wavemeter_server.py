@@ -11,6 +11,28 @@ All rights reserved.
 
 Code to run a wavemeter server that allows to read in series several lasers.
 
+
+"""
+WS6 server to allow multiple users (lasers) to be locked to the WS6 wavelength meter
+    Example connection to this server:
+        laser = 'CTL2'  #connect as CTL2 laser
+        nameserver = Pyro4.locateNS('127.0.0.XXX')
+        uri = nameserver.lookup('ws6server')
+
+        wlm = Pyro4.Proxy(uri)
+        wlm.register_user(laser)  #optional slot_length = 2.
+        wlm.query_wavelength(laser)
+        wlm.deregister_user(laser)
+
+    Users initially register, the server then handles all connections and passes
+    the WLM reading to make sure errors on the user side do not affect the server.
+    It is possible to request a longer slot time than the standard time set on
+    the server side while registering.
+    The server closes the connection to the users after self.max_inactivity_time.
+"""
+
+
+
 Needs to have:
     - qcodes enviroment (https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 	- a wavemeter 
@@ -36,24 +58,6 @@ from Drivers_and_tools.Sercalo_1xN_switch import SercaloSwitch
 @Pyro4.expose
 @Pyro4.behavior(instance_mode="single")
 class WS6Server:
-    """WS6 server to allow multiple users (lasers) to be locked to the WS6 wavelength meter
-    Example connection to this server:
-        laser = 'CTL1'  #connect as CTL1 laser
-        nameserver = Pyro4.locateNS('127.0.0.1')
-        uri = nameserver.lookup('ws6server')
-
-        wlm = Pyro4.Proxy(uri)
-        wlm.register_user(laser)  #optional slot_length = 2.
-        wlm.query_wavelength(laser)
-        wlm.deregister_user(laser)
-
-    Users initially register, the server then handles all connections and passes
-    the WLM reading to make sure errors on the user side do not affect the server.
-    It is possible to request a longer slot time than the standard time set on
-    the server side while registering.
-    The server closes the connection to the users after self.max_inactivity_time.
-    """
-
     def __init__(self):
         #timeout after which users are automatically disconnected
         self.max_inactivity_time = 60. #s

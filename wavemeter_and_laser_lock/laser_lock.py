@@ -13,14 +13,14 @@ ________________________________________________________________________________
 HOW TO USE THE CODE:
 
     1 - build a setup as shown in scheme_setup.jpg
-    2 - run the wlm_server_2_3.py on the machine connected to the wavemeter (driver HighFinesse_WS6) and the optical switch (driver Sercalo_1xN_switch)
-    3 - run the laser_lock_5_0 on the machine connected to the laser (driver TopticaDLCPro) 
+    2 - run the wavemeter_server.py on the machine connected to the wavemeter (driver HighFinesse_WS6) and the optical switch (driver Sercalo_1xN_switch)
+    3 - run the laser_lock.py on the machine connected to the laser (driver TopticaDLCPro) 
     4 - use the GUI, or run remote_control_laser.py to remotely control the laser lock 
 
 __________________________________________________________________________________________________
 
 
-Code to run a laser lock server that allows to lock single lasers using the reading from a external wavemeter (accessed via the wlm_server_2_3).
+Code to run a laser lock server that allows to lock single lasers using the reading from a external wavemeter (accessed via the wlm_server).
 The laser can be controlled remotely via the laser_lock server on other consoles or machines, and via the GUI.
 To lock multiple lasers in 'parallel' just run the script multiple times in separate consoles (the reading from the wavementer will be in series, so the lock of multiple lasers will be toggling between them in series continuosly).
 

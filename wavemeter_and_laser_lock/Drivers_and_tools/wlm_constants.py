@@ -9,6 +9,9 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
+
+just some constant needed for the wavemeter instrument to work
+
 """
 # ***********  Constants  **********************************************
 

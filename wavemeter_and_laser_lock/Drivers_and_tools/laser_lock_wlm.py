@@ -8,7 +8,7 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
-Class to use the wavementer server to lock the lasers, used in laser_lock_5_0 as a general class for all lasers.
+Class to use the wavementer server to lock the lasers, used in laser_lock as a general class for all lasers.
 
 
 '''
