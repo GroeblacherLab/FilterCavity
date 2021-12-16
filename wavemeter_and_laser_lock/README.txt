@@ -7,6 +7,8 @@ HOW TO USE THE CODE:
 
 
 
+If used a other laser than the TopticaDLCPro you need to write a driver.
+If a single laser is locked the 1xN switch is not needed and the relative part in wavemeter_server.py can be removed,
 
-Using the HighFinesse_WS6 as wavemeter and 3 lasers locked at the same time, the feedback for each laser is every second and a stability of +-1MHz around the desired wavelenght is achieved. 
+Using the HighFinesse_WS6 as wavemeter and 3 lasers locked at the same time, the feedback for each laser is every 0.6 second and a stability of +-1MHz around the desired wavelenght is achieved. 
 
