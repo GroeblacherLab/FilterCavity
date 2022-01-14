@@ -4,8 +4,7 @@ Created on Wed Feb 24 14:52:54 2016
 
 @author: A.Wallucks
 
-This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License
-
+This work is licensed under the GNU Affero General Public License v3.0
 Copyright (c) 2021, GroeblacherLab
 All rights reserved.
 
