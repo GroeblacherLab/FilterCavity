@@ -49,7 +49,7 @@ import numpy as np
 import threading
 import Pyro4
 
-from network import pyro_tools
+from server_library import pyro_tools
 #import the used wavemeter
 from Drivers_and_tools.HighFinesse_WS6 import Wavelengthmeter
 #import the optical switch used to toggle the users
@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     host = '192.168.1.XXX'   ######## use the IP of the machine used in the lab
     nameserver  = True
-    share_name  = 'ws6server'
+    share_name  = 'wsserver'
 
     daemon = Pyro4.Daemon(host=host, port=9092)
     uri = daemon.register(ws6)

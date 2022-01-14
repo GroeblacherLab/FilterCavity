@@ -76,7 +76,7 @@ from Drivers_and_tools.TopticaDLCPro import TopticaDLCPro #needs the qcodes repo
 import Drivers_and_tools.ppcl550driver as pp
 from Drivers_and_tools.Tl6800control import TL6800
 
-from network import pyro_tools,qt5_pyro_integration
+from server_library import pyro_tools,qt5_pyro_integration
 Pyro4.expose(remote_lock_access)
 
 class lockTopticaCTL():
@@ -148,7 +148,7 @@ if __name__ == '__main__':
         cur_laser = None
     
     #use the IP of the machine running the wavementer server    
-    lock = laserWLMLock(*lasers, wlm_address = 'PYRONAME:ws6server@192.168.1.XXX')
+    lock = laserWLMLock(*lasers, wlm_address = 'PYRONAME:wsserver@192.168.1.XXX')
     Window = laserLockGUI(lock)
     if cur_laser is not None:
         Window.ui.comboBox.setCurrentIndex(laser_idx+1)
