@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this design, please cite it as below."
+authors:
+- family-names: "Wallucks"
+  given-names: "Andreas"
+  orcid: "https://orcid.org/0000-0001-7177-1759"
+- family-names: "Hensen"
+  given-names: "Bas"
+  orcid: "https://orcid.org/0000-0003-1754-6029"
+- family-names: "Fiaschi"
+  given-names: "Niccolo"
+  orcid: "https://orcid.org/0000-0002-3141-1553"
+- family-names: "Groeblacher"
+  given-names: "Simon"
+  orcid: "https://orcid.org/0000-0003-3932-7820"
+title: "LabCode by GroeblacherLab"
+version: 1.0.0
+doi: 10.5281/zenodo.5850287
+date-released: 2022-07-14
+url: "https://github.com/GroeblacherLab/FilterCavity"
