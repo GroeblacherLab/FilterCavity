@@ -1,4 +1,4 @@
-# LabCode
+# FilterCavity
 Repository for the design of an optical filter cavity developed in the GroeblacherLab at Delft University of Technology.
 
 This folder currently contains:
